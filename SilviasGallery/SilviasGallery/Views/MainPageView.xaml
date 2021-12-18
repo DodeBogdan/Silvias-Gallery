@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SilviasGallery.ViewModels;assembly=SilviasGallery"
+             xmlns:silviasGallery="clr-namespace:SilviasGallery;assembly=SilviasGallery"
+             x:Class="SilviasGallery.Views.MainPageView" 
+             x:DataType="viewModels:MainPageViewModel">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Frame Grid.ColumnSpan="5" Grid.Row="0" BorderColor="Black">
+        <ListView ItemsSource="{Binding Users}"
+                  SelectedItem="{Binding SelectedUser}"
+                  Header=""
+                  HasUnevenRows="True">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Token:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="2" Text="Persoane:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="3" Text="Discount:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+
+                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Color="Black" HeightRequest="1"></BoxView>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="silviasGallery:User">
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding FullName}" Style="{StaticResource LabelStyle}"/>
+                            <Label Grid.Column="1" Text="{Binding Token}" Style="{StaticResource LabelStyle}"/>
+                            <Label Grid.Column="2" Text="{Binding NumberOfPersons}" Style="{StaticResource LabelStyle}"/>
+                            <Label Grid.Column="3" Text="{Binding Discount}" Style="{StaticResource LabelStyle}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </Frame>
+
+        <Frame Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1" BorderColor="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Text="Prenume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Nume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+
+                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding AddNewUser.FirstName}"/>
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding AddNewUser.LastName}" />
+            </Grid>
+        </Frame>
+
+        <Button Grid.Row="2" Grid.Column="1"  Text="Adauga" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding AddUserCommand}" />
+        <Button  Grid.Row="2" Grid.Column="3" Text="Creste" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding IncreaseUserCommand}"/>
+        
+        <Button  Grid.Row="4" Grid.Column="1" Text="Sterge" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DeleteUserCommand}"/>
+
+        <Button  Grid.Row="4" Grid.Column="3" Text="Scade" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DecreaseUserCommand}"/>
+    </Grid>
+</ContentPage>
