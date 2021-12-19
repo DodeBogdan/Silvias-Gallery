@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,27 @@ namespace SilviasGallery.ViewModels
 {
     internal class MainPageViewModel : INotifyPropertyChanged
     {
+        private string _searchPartEntry;
+
+        public string SearchPartEntry
+        {
+            get => _searchPartEntry;
+            set
+            {
+                _searchPartEntry = value;
+                OnPropertyChanged();
+                if (string.IsNullOrEmpty(_searchPartEntry))
+                {
+                    Users = new ObservableCollection<User>(_defaultList);
+                    return;
+                }
+
+                Users = new ObservableCollection<User>(_defaultList.Where(x => x.Token.Contains(_searchPartEntry)));
+            }
+        }
+
+
+
         #region Static Fields and Constants
         private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
         #endregion
@@ -22,6 +44,7 @@ namespace SilviasGallery.ViewModels
         private DataBaseService _dataBaseService;
         private User _user;
         private ObservableCollection<User> _users = new ObservableCollection<User>();
+        private List<User> _defaultList = new List<User>();
         #endregion
 
         #region Properties and Indexers
@@ -73,14 +96,24 @@ namespace SilviasGallery.ViewModels
         }
         #endregion
 
+        private bool Exists(string token)
+        {
+            return _defaultList.FirstOrDefault(user => user.Token == token) != null;
+        }
+
         #region Private members
         private async void AddUser()
         {
-            if (string.IsNullOrEmpty(AddNewUser.FirstName) || string.IsNullOrEmpty(AddNewUser.LastName))
+            if (string.IsNullOrEmpty(AddNewUser.FirstName) || string.IsNullOrEmpty(AddNewUser.LastName) || string.IsNullOrEmpty(AddNewUser.Token))
+            {
+                return;
+            }
+
+            if (Exists(AddNewUser.Token))
                 return;
 
-            AddNewUser.Token = Guid.NewGuid().ToString().Substring(0, 8);
             Users.Add(AddNewUser.Clone());
+            _defaultList.Add(AddNewUser.Clone());
 
             await Semaphore.WaitAsync();
             await _dataBaseService.SaveUserAsync(AddNewUser);
@@ -106,6 +139,7 @@ namespace SilviasGallery.ViewModels
             Semaphore.Release();
 
             Users.Remove(SelectedUser);
+            _defaultList.Remove(SelectedUser);
         }
 
         private async void EditUser(int negativeOrPositive)
@@ -119,10 +153,12 @@ namespace SilviasGallery.ViewModels
             var user = Users.Single(x => x.Id == SelectedUser.Id);
 
             Users.Remove(user);
+            _defaultList.Remove(user);
 
             user.NumberOfPersons += negativeOrPositive;
 
             Users.Add(user);
+            _defaultList.Add(user);
 
             await Semaphore.WaitAsync();
             await _dataBaseService.SaveUserAsync(user);
@@ -133,6 +169,7 @@ namespace SilviasGallery.ViewModels
         {
             await Semaphore.WaitAsync();
             Users = new ObservableCollection<User>(await _dataBaseService.GetUsersAsync());
+            _defaultList = Users.ToList();
             Semaphore.Release();
         }
 

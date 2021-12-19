@@ -14,6 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -21,7 +22,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <Frame Grid.ColumnSpan="5" Grid.Row="0" BorderColor="Black">
+
+        <Entry Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Text="{Binding SearchPartEntry}" Placeholder="Cautare token" TextColor="Black"/>
+
+        <Frame Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1" BorderColor="Black">
         <ListView ItemsSource="{Binding Users}"
                   SelectedItem="{Binding SelectedUser}"
                   Header=""
@@ -39,10 +43,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Text="Nume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="Token:" FontSize="18" Style="{StaticResource LabelStyle}"/>
-                        <Label Grid.Row="0" Grid.Column="2" Text="Persoane:" FontSize="18" Style="{StaticResource LabelStyle}"/>
-                        <Label Grid.Row="0" Grid.Column="3" Text="Discount:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nume:" FontSize="16" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Token:" FontSize="16" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="2" Text="Persoane:" FontSize="16" Style="{StaticResource LabelStyle}"/>
+                        <Label Grid.Row="0" Grid.Column="3" Text="Discount:" FontSize="16" Style="{StaticResource LabelStyle}"/>
 
                         <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Color="Black" HeightRequest="1"></BoxView>
                     </Grid>
@@ -69,7 +73,7 @@
         </ListView>
         </Frame>
 
-        <Frame Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1" BorderColor="Black">
+        <Frame Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="2" BorderColor="Black">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -80,19 +84,21 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="Prenume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
-                <Label Grid.Row="1" Grid.Column="0" Text="Nume:" FontSize="18" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="0" Grid.Column="0" Text="Prenume:" FontSize="16" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Nume:" FontSize="16" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Token:" FontSize="16" Style="{StaticResource LabelStyle}"/>
 
                 <Entry Grid.Row="0" Grid.Column="1" Text="{Binding AddNewUser.FirstName}"/>
                 <Entry Grid.Row="1" Grid.Column="1" Text="{Binding AddNewUser.LastName}" />
+                <Entry Grid.Row="2" Grid.Column="1" Text="{Binding AddNewUser.Token}" />
             </Grid>
         </Frame>
 
-        <Button Grid.Row="2" Grid.Column="1"  Text="Adauga" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding AddUserCommand}" />
-        <Button  Grid.Row="2" Grid.Column="3" Text="Creste" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding IncreaseUserCommand}"/>
+        <Button Grid.Row="3" Grid.Column="1"  Text="Adauga" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding AddUserCommand}" />
+        <Button  Grid.Row="3" Grid.Column="3" Text="Creste" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding IncreaseUserCommand}"/>
         
-        <Button  Grid.Row="4" Grid.Column="1" Text="Sterge" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DeleteUserCommand}"/>
+        <Button  Grid.Row="5" Grid.Column="1" Text="Sterge" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DeleteUserCommand}"/>
 
-        <Button  Grid.Row="4" Grid.Column="3" Text="Scade" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DecreaseUserCommand}"/>
+        <Button  Grid.Row="5" Grid.Column="3" Text="Scade" BorderColor="Black" TextColor="Black" TextTransform="Default" BorderWidth="1" CornerRadius="10" Padding="1" Command="{Binding DecreaseUserCommand}"/>
     </Grid>
 </ContentPage>
